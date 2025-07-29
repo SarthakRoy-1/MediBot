@@ -1,0 +1,222 @@
+:root {
+    --primary-color: #2193b0;
+    --secondary-color: #6dd5ed;
+    --dark-color: #1e3c72;
+    --light-color: #ffffff;
+    --gradient: linear-gradient(135deg, var(--dark-color) 0%, var(--primary-color) 100%);
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+    background: var(--gradient);
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.chat {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    height: 85vh;
+    border-radius: 20px !important;
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.card-header {
+    background: var(--gradient) !important;
+    color: white;
+    border-radius: 20px 20px 0 0 !important;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.msg_card_body {
+    height: calc(85vh - 160px);
+    overflow-y: auto;
+    padding: 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) #f0f0f0;
+}
+
+.msg_card_body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.msg_card_body::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+.msg_card_body::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+.user_img {
+    height: 50px;
+    width: 50px;
+    border: 2px solid #f5f6fa;
+}
+
+.user_img_msg {
+    height: 40px;
+    width: 40px;
+}
+
+.img_cont {
+    position: relative;
+    height: 50px;
+    width: 50px;
+}
+
+.img_cont_msg {
+    height: 40px;
+    width: 40px;
+}
+
+.online_icon {
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    background-color: #4cd137;
+    border-radius: 50%;
+    bottom: 2px;
+    right: 2px;
+    border: 2px solid white;
+}
+
+.user_info {
+    margin-left: 15px;
+}
+
+.user_info span {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.user_info p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.msg_cotainer {
+    margin-left: 10px;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+    max-width: 70%;
+}
+
+.msg_cotainer_send {
+    margin-right: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 15px;
+    padding: 15px;
+    position: relative;
+    max-width: 70%;
+}
+
+.msg_time {
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+    font-size: 10px;
+    color: rgba(0,0,0,0.5);
+}
+
+.msg_time_send {
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+}
+
+.type_msg {
+    border: 0 !important;
+    border-radius: 15px !important;
+    font-size: 16px !important;
+    padding: 15px 20px !important;
+}
+
+.send_btn {
+    border-radius: 15px !important;
+    background-color: var(--primary-color) !important;
+    border: none !important;
+    color: white !important;
+    cursor: pointer;
+    padding: 15px !important;
+}
+
+.feature_btn {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+}
+
+.feature_btn:hover {
+    transform: scale(1.1);
+}
+
+.typing-indicator {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.typing-indicator span {
+    height: 8px;
+    width: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: bounce 1s infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@media (max-width: 768px) {
+    .card {
+        height: 95vh;
+        margin: 10px;
+    }
+    
+    .msg_card_body {
+        height: calc(95vh - 160px);
+    }
+    
+    .msg_cotainer, .msg_cotainer_send {
+        max-width: 85%;
+    }
+}
