@@ -87,5 +87,6 @@ def get_chat_response():
 
 # Use dynamic port binding for Render
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 10000))
+    port = int(os.environ.get("PORT", 10000))  # <- Use PORT from environment
     app.run(host="0.0.0.0", port=port)
+
