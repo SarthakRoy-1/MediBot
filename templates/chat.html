@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>MedAI Assistant - Chat Interface</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="container">
+				<a class="navbar-brand" href="{{ url_for('landing') }}">
+					<i class="fas fa-heartbeat mr-2"></i>MedAI Assistant
+				</a>
+				<a href="{{ url_for('landing') }}" class="btn btn-outline-light">Back to Home</a>
+			</div>
+		</nav>
+
+		<div class="container-fluid h-100">
+			<div class="row justify-content-center h-100">		
+				<div class="col-md-8 col-xl-6 chat">
+					<div class="card">
+						<div class="card-header msg_head">
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img">
+									<span class="online_icon"></span>
+								</div>
+								<div class="user_info">
+									<span>MedAI Assistant</span>
+									<p>Ask me any medical question!</p>
+								</div>
+							</div>
+							<div class="chat_features">
+								<button class="btn feature_btn" id="clearChat">
+									<i class="fas fa-trash"></i>
+								</button>
+							</div>
+						</div>
+						<div id="messageFormeight" class="card-body msg_card_body">
+							<!-- Welcome message will be inserted here by JavaScript -->
+						</div>
+						<div class="card-footer">
+							<form id="messageArea" class="input-group">
+								<input type="text" id="text" name="msg" 
+									placeholder="Type your medical question..." 
+									autocomplete="off" 
+									class="form-control type_msg" required/>
+								<div class="input-group-append">
+									<button type="submit" id="send" class="input-group-text send_btn">
+										<i class="fas fa-paper-plane"></i>
+									</button>
+								</div>
+							</form>
+							<div class="typing-indicator" style="display: none;">
+								<span></span>
+								<span></span>
+								<span></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				// Add welcome message
+				const welcomeMessage = 'Hello! I\'m your MedAI Assistant. I can help you with medical information and questions. How can I assist you today?';
+				const date = new Date();
+				const hour = date.getHours();
+				const minute = date.getMinutes();
+				const str_time = hour+":"+minute;
+				
+				var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + welcomeMessage + '<span class="msg_time">' + str_time + '</span></div></div>';
+				$("#messageFormeight").append($.parseHTML(botHtml));
+
+				// Clear chat functionality
+				$("#clearChat").click(function() {
+					$("#messageFormeight").empty();
+					// Re-add welcome message
+					$("#messageFormeight").append($.parseHTML(botHtml));
+				});
+
+				$("#messageArea").on("submit", function(event) {
+					event.preventDefault();
+					
+					const date = new Date();
+					const hour = date.getHours();
+					const minute = date.getMinutes();
+					const str_time = hour+":"+minute;
+					var rawText = $("#text").val();
+
+					if (rawText.trim() === '') return;
+
+					var userHtml = '<div class="d-flex justify-content-end mb-4"><div class="msg_cotainer_send">' + rawText + '<span class="msg_time_send">'+ str_time + '</span></div><div class="img_cont_msg"><img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg"></div></div>';
+					
+					$("#text").val("");
+					$("#messageFormeight").append(userHtml);
+					$("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+
+					// Show typing indicator
+					$(".typing-indicator").show();
+
+					$.ajax({
+						data: {
+							msg: rawText,	
+						},
+						type: "POST",
+						url: "/get",
+					}).done(function(data) {
+						// Hide typing indicator
+						$(".typing-indicator").hide();
+						
+						var botHtml = '<div class="d-flex justify-content-start mb-4"><div class="img_cont_msg"><img src="https://cdn-icons-png.flaticon.com/512/387/387569.png" class="rounded-circle user_img_msg"></div><div class="msg_cotainer">' + data + '<span class="msg_time">' + str_time + '</span></div></div>';
+						$("#messageFormeight").append($.parseHTML(botHtml));
+						$("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+					});
+				});
+			});
+		</script>
+        
+    </body>
+</html>
