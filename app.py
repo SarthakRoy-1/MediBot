@@ -108,4 +108,4 @@ def get_chat_response():  # Renamed from 'chat' to 'get_chat_response'
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8080, debug=False)  #--> if in development phase
+    app.run(host="0.0.0.0", port=8080)  #--> if in development phase
